@@ -1,0 +1,7 @@
+{
+    "name": "diarioinformacion/scraper",
+    "require": {
+        "fabpot/goutte": "^3.2",
+        "guzzlehttp/guzzle": "^6.2"
+    }
+}
