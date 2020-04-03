@@ -43,11 +43,11 @@ class StringHandler implements HandlerInterface
     /**
      * {@inheritdoc}
      */
-    public function handle(Reader $reader, TokenStream $stream): bool
+    public function handle(Reader $reader, TokenStream $stream)
     {
         $quote = $reader->getSubstring(1);
 
-        if (!\in_array($quote, ["'", '"'])) {
+        if (!\in_array($quote, array("'", '"'))) {
             return false;
         }
 
@@ -55,7 +55,7 @@ class StringHandler implements HandlerInterface
         $match = $reader->findPattern($this->patterns->getQuotedStringPattern($quote));
 
         if (!$match) {
-            throw new InternalErrorException(sprintf('Should have found at least an empty match at %d.', $reader->getPosition()));
+            throw new InternalErrorException(sprintf('Should have found at least an empty match at %s.', $reader->getPosition()));
         }
 
         // check unclosed strings

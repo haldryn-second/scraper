@@ -1,40 +1,6 @@
 CHANGELOG
 =========
 
-4.3.0
------
-
- * Added PHPUnit constraints: `BrowserCookieValueSame` and `BrowserHasCookie`
- * Added `HttpBrowser`, an implementation of a browser with the HttpClient component
- * Renamed `Client` to `AbstractBrowser`
- * Marked `Response` final.
- * Deprecated `Response::buildHeader()`
- * Deprecated `Response::getStatus()`, use `Response::getStatusCode()` instead
-
-4.2.0
------
-
- * The method `Client::submit()` will have a new `$serverParameters` argument 
-   in version 5.0, not defining it is deprecated
- * Added ability to read the "samesite" attribute of cookies using `Cookie::getSameSite()`
-
-3.4.0
------
-
- * [BC BREAK] Client will skip redirects during history navigation
-   (back and forward calls) according to W3C Browsers recommendation
-
-3.3.0
------
-
- * [BC BREAK] The request method is dropped from POST to GET when the response
-   status code is 301.
-
-3.2.0
------
-
- * Client HTTP user agent has been changed to 'Symfony BrowserKit'
-
 2.3.0
 -----
 

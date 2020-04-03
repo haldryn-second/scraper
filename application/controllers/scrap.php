@@ -11,9 +11,7 @@ class scrap extends CI_Controller
 	public function index()
 	{
 
-		$this->load->view('main');
-
-		
+		$this->load->view('main');		
 		$url =  $_POST['scrap_url'];
 		$client = new Client();
 		$crawler = $client->request('GET', $url);
