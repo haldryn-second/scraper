@@ -14,7 +14,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 			<?php if ($firma == 1) { ?>
 				<span class="text-success">El autor ha impreso su firma correctamente</span>
 			<?php } else { ?>
-				<span class="text-danger">El autor no ha impreso su firma correctamente</span>
+				<span class="text-danger">El autor no ha impreso su firma correctamente (no existe o no tiene enlace)</span>
 			<?php } ?>
 		</div>
 		<div class="col-12 p-3 my-2 border rounded"><?php if ($cuerpo_long < 500) { ?><span class="text-danger"><?php } else { ?><span class="text-success"><?php } ?>El cuerpo del artículo tiene <?= $cuerpo_long ?> caracteres de los 500 requeridos</span></div>
@@ -39,6 +39,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 		<div class="col-12 p-3 my-2 border rounded">Se han encontrado un total de <?= $mapas ?> mapa/s</div>
 		<div class="col-12 p-3 my-2 border rounded"><?php if ($negrita < 5) { ?><span class="text-danger"><?php } else { ?><span class="text-success"><?php } ?>El texto contiene un total de <?= $negrita ?> bloque/s en negrita de los 5 requeridos</div>
 		<div class="col-12 p-3 my-2 border rounded">El texto contiene un total de <?= $lad_long ?> ladillo/s</div>
+		<div class="col-12 p-3 my-2 border rounded"><?php if ($tags < 5) { ?><span class="text-danger"><?php } else { ?><span class="text-success"><?php } ?>El texto contiene un total de <?= $tags ?> Tag/s del mínimo de 5</span></div>
 
 
 	</div>
