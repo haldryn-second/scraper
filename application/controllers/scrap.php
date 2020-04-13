@@ -52,10 +52,9 @@ class scrap extends CI_Controller
 
 		//CONTEO DE PALABRAS EN EL CUERPO DE LA NOTICIA
 		$output = $crawler->filter($selector_cuerpo)->extract(array('_text'));
-
 		$str = mb_strtoupper($output[0], 'UTF-8');
 		$conv = array("Á" => "A", "É" => "E", "Í" => "I", "Ó" => "O", "Ú" => "U");
-		$text_final= strtr($str, $conv);
+		$text_final = strtr($str, $conv);
 		$cuerpo = str_word_count($text_final);
 
 
@@ -76,8 +75,13 @@ class scrap extends CI_Controller
 
 
 		//CONTEO DE ENLACES EN EL CUERPO DE LA NOTICIA
-		$output = $crawler->filter($selector_enlace);
+		$output = $crawler->filter($selector_enlace)->extract(array('href'));
 		$enlaces = (count($output));
+
+		$enlaces_internos = 0;
+		for ($i = 0; $i < count($output); $i++) {
+			if ((substr($output[$i], 0, 33) == "https://www.diarioinformacion.com") || (substr($output[$i], 0, 26) == "https://www.informacion.es") || (substr($output[$i], 0, 1) == "/")) ++$enlaces_internos;
+		}
 
 
 		//CONTEO DE ENLACES CON NOFOLLOW O SPONSORED EN EL CUERPO DE LA NOTICIA
@@ -87,7 +91,9 @@ class scrap extends CI_Controller
 		$output = $crawler->filter($selector_sponsored);
 		$sponsored = (count($output));
 
-		$link_nof_spon = ($nofollow + $sponsored);
+		$enlaces_externos = ($nofollow + $sponsored);
+
+		$enlaces_ext_follow = ($enlaces - ($enlaces_internos + $enlaces_externos));
 
 
 		//ENLACES A PARTIR DEL 50%
@@ -129,14 +135,151 @@ class scrap extends CI_Controller
 		$output = $crawler->filter($selector_frame)->extract(array('src'));
 		$conteo_vids = 0;
 		for ($i = 0; $i < count($output); $i++) {
-			if (substr($output[$i], 0, 19) == "https://www.youtube") ++$conteo_vids;
+			++$conteo_vids;
 		}
+		$conteo_vids = $conteo_vids - $conteo_mapas;
 
 
 		//TAGS
 		$output = $crawler->filter($selector_tags);
 		$tags = count($output);
 
+
+
+		//PUNTUACIONES
+		if ($title >= 70) {
+			$punt_title = 200;
+		} elseif ($title >= 60) {
+			$punt_title = 80;
+		} elseif ($title >= 45) {
+			$punt_title = 60;
+		} else {
+			$punt_title = 0;
+		}
+
+		if ($meta >= 100) {
+			$punt_meta = 200;
+		} elseif ($meta >= 80) {
+			$punt_meta = 80;
+		} elseif ($meta >= 60) {
+			$punt_meta = 60;
+		} else {
+			$punt_meta = 0;
+		}
+
+		if ($autor == 1) {
+			$punt_autor = 50;
+		} else {
+			$punt_autor = 0;
+		}
+
+		if ($cuerpo >= 600) {
+			$punt_cuerpo = 100;
+		} elseif ($cuerpo >= 500) {
+			$punt_cuerpo = 80;
+		} elseif ($cuerpo >= 350) {
+			$punt_cuerpo = 50;
+		} else {
+			$punt_cuerpo = 0;
+		}
+
+		if ($imgs >= 3) {
+			$punt_imgs = 100;
+		} elseif ($imgs == 2) {
+			$punt_imgs = 80;
+		} elseif ($imgs == 1) {
+			$punt_imgs = 60;
+		} else {
+			$punt_imgs = 0;
+		}
+
+		if ($conteo_alts == $imgs) {
+			$punt_alts = 100;
+		} else {
+			$punt_alts = 0;
+		}
+
+		if ($conteo_pie == $imgs) {
+			$punt_pies = 50;
+		} else {
+			$punt_pies = 0;
+		}
+
+		if ($conteo_vids >= 2) {
+			$punt_vids = 100;
+		} elseif ($imgs == 1) {
+			$punt_vids = 80;
+		} else {
+			$punt_vids = 0;
+		}
+
+		if ($conteo_mapas >= 1) {
+			$punt_maps = 100;
+		} else {
+			$punt_maps = 0;
+		}
+
+		if ($neg >= 9) {
+			$punt_neg = 100;
+		} elseif ($neg >= 7) {
+			$punt_neg = 60;
+		} elseif ($neg >= 5) {
+			$punt_neg = 40;
+		} else {
+			$punt_neg = 0;
+		}
+
+		if ($ladillos >= 3) {
+			$punt_lad = 100;
+		} elseif ($ladillos >= 2) {
+			$punt_lad = 50;
+		} elseif ($ladillos >= 1) {
+			$punt_lad = 25;
+		} else {
+			$punt_lad = 0;
+		}
+
+		if ($tags >= 5) {
+			$punt_tags = 100;
+		} elseif ($tags >= 4) {
+			$punt_tags = 50;
+		} elseif ($tags >= 3) {
+			$punt_tags = 25;
+		} else {
+			$punt_tags = 0;
+		}
+
+		if ($enlaces >= 5) {
+			$punt_enlaces = 100;
+		} elseif ($enlaces >= 4) {
+			$punt_enlaces = 50;
+		} elseif ($enlaces >= 3) {
+			$punt_enlaces = 25;
+		} else {
+			$punt_enlaces = 0;
+		}
+
+		if ($enlaces_internos >= 4) {
+			$punt_enlaces_int = 200;
+		} elseif ($enlaces_internos >= 3) {
+			$punt_enlaces_int = 150;
+		} elseif ($enlaces_internos >= 2) {
+			$punt_enlaces_int = 100;
+		} else {
+			$punt_enlaces_int = 0;
+		}
+
+		if ($enlaces_ext_follow >= 1) {
+			$punt_enlaces_follow = 0;
+		} else {
+			$punt_enlaces_follow = 500;
+		}
+
+		if ($link_50 == 1) {
+			$punt_link50 = 100;
+		} else {
+			$punt_link50 = 0;
+		}
 
 		$data = array(
 			'title_long' => $title,
@@ -146,7 +289,7 @@ class scrap extends CI_Controller
 			'lad_long' => $ladillos,
 			'negrita' => $neg,
 			'links' => $enlaces,
-			'spon_nofol' => $link_nof_spon,
+			'spon_nofol' => $enlaces_externos,
 			'link50' => $link_50,
 			'mapas' => $conteo_mapas,
 			'imagenes' => $imgs,
@@ -156,6 +299,28 @@ class scrap extends CI_Controller
 			'tags' => $tags
 		);
 
+		$json=array(
+			'Title'=>$punt_title,
+			'Desc'=>$punt_meta,
+			'Autor'=>$punt_autor,
+			'Cuerpo'=>$punt_cuerpo,
+			'Imágenes'=>$punt_imgs,
+			'Alt-Title'=>$punt_alts,
+			'Pies de foto'=>$punt_pies,
+			'Vídeos'=>$punt_vids,
+			'Mapas'=>$punt_maps,
+			'Negritas'=>$punt_neg,
+			'Ladillos'=>$punt_lad,
+			'Tags'=>$punt_tags,
+			'Número enlaces'=>$punt_enlaces,
+			'Enlaces internos'=>$punt_enlaces_int,
+			'Enlaces externos dofollow'=>$punt_enlaces_follow,
+			'Enlaces después del 50%'=>$punt_link50
+		);
+
+		$res_json = json_encode($json,JSON_UNESCAPED_UNICODE);
+		echo $res_json;
+		
 		$this->load->view('scrap_res', $data);
 	}
 }
