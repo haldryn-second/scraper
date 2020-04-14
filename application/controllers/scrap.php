@@ -207,7 +207,7 @@ class scrap extends CI_Controller
 
 		if ($conteo_vids >= 2) {
 			$punt_vids = 100;
-		} elseif ($imgs == 1) {
+		} elseif ($conteo_vids == 1) {
 			$punt_vids = 80;
 		} else {
 			$punt_vids = 0;
