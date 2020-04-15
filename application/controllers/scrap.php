@@ -76,11 +76,11 @@ class scrap extends CI_Controller
 
 		//CONTEO DE ENLACES EN EL CUERPO DE LA NOTICIA
 		$output = $crawler->filter($selector_enlace)->extract(array('href'));
-		$enlaces = (count($output));
+		$links = (count($output));
 
-		$enlaces_internos = 0;
+		$links_internos = 0;
 		for ($i = 0; $i < count($output); $i++) {
-			if ((substr($output[$i], 0, 33) == "https://www.diarioinformacion.com") || (substr($output[$i], 0, 26) == "https://www.informacion.es") || (substr($output[$i], 0, 1) == "/")) ++$enlaces_internos;
+			if ((substr($output[$i], 0, 33) == "https://www.diarioinformacion.com") || (substr($output[$i], 0, 26) == "https://www.informacion.es") || (substr($output[$i], 0, 1) == "/")) ++$links_internos;
 		}
 
 
@@ -91,23 +91,23 @@ class scrap extends CI_Controller
 		$output = $crawler->filter($selector_sponsored);
 		$sponsored = (count($output));
 
-		$enlaces_externos = ($nofollow + $sponsored);
+		$links_externos = ($nofollow + $sponsored);
 
-		$enlaces_ext_follow = ($enlaces - ($enlaces_internos + $enlaces_externos));
+		$links_externos_follow = ($links - ($links_internos + $links_externos));
 
 
 		//ENLACES A PARTIR DEL 50%
 		$output = $crawler->filter($selector_cuerpo)->html();
 		$html_text = substr($output, strlen($output) / 2, strlen($output));
-		if (strpos($html_text, "<a") > 0) $link_50 = 1;
-		else $link_50 = 0;
+		if (strpos($html_text, "<a") > 0) $links50 = 1;
+		else $links50 = -1;
 
 
 		//CONTEO DE MAPAS
 		$output = $crawler->filter($selector_frame)->extract(array('src'));
-		$conteo_mapas = 0;
+		$maps = 0;
 		for ($i = 0; $i < count($output); $i++) {
-			if (substr($output[$i], 0, 33) == "https://www.google.com/maps/embed") ++$conteo_mapas;
+			if (substr($output[$i], 0, 33) == "https://www.google.com/maps/embed") ++$maps;
 		}
 
 
@@ -118,26 +118,26 @@ class scrap extends CI_Controller
 
 		//ALTS o TITLES
 		$output = $crawler->filter($selector_img)->extract(array('alt', 'title'));
-		$conteo_alts = 0;
+		$alts = 0;
 		for ($i = 0; $i < count($output); $i++) {
-			if (strlen(str_replace(' ', '', $output[$i][0])) >= 20) ++$conteo_alts;
-			else if (strlen(str_replace(' ', '', $output[$i][0])) >= 20) ++$conteo_alts;
+			if (strlen(str_replace(' ', '', $output[$i][0])) >= 20) ++$alts;
+			else if (strlen(str_replace(' ', '', $output[$i][0])) >= 20) ++$alts;
 		}
 
 		//PIES DE IMÁGENES
 		$output = $crawler->filter($selector_pie_foto)->extract(array('_text'));
-		$conteo_pie = 0;
+		$pies = 0;
 		for ($i = 0; $i < count($output); $i++) {
-			if ($output[$i] != "") ++$conteo_pie;
+			if ($output[$i] != "") ++$pies;
 		}
 
 		//VIDEOS
 		$output = $crawler->filter($selector_frame)->extract(array('src'));
-		$conteo_vids = 0;
+		$vids = 0;
 		for ($i = 0; $i < count($output); $i++) {
-			++$conteo_vids;
+			++$vids;
 		}
-		$conteo_vids = $conteo_vids - $conteo_mapas;
+		$vids = $vids - $maps;
 
 
 		//TAGS
@@ -145,142 +145,66 @@ class scrap extends CI_Controller
 		$tags = count($output);
 
 
+		// //PUNTUACIONES
 
-		//PUNTUACIONES
-		if ($title >= 70) {
-			$punt_title = 200;
-		} elseif ($title >= 60) {
-			$punt_title = 80;
-		} elseif ($title >= 45) {
-			$punt_title = 60;
-		} else {
-			$punt_title = 0;
+
+		$matriz_valores = array(
+			"title" => array("A" => 70, "B" => 60, "C" => 45, "D" => 0),
+			"meta" => array("A" => 100, "B" => 80, "C" => 60, "D" => 0),
+			"autor" => array("A" => 1, "B" => 0, "C" => 0, "D" => 0),
+			"cuerpo" => array("A" => 600, "B" => 500, "C" => 350, "D" => 0),
+			"imgs" => array("A" => 3, "B" => 2, "C" => 1, "D" => 0),
+			"alts" => array("A" => 1, "B" => -1, "C" => -1, "D" => -1),
+			"pies" => array("A" => 1, "B" => -1, "C" => -1, "D" => -1),
+			"vids" => array("A" => 2, "B" => 1, "C" => 0, "D" => 0),
+			"maps" => array("A" => 1, "B" => 0, "C" => 0, "D" => 0),
+			"neg" => array("A" => 9, "B" => 7, "C" => 5, "D" => 0),
+			"ladillos" => array("A" => 3, "B" => 2, "C" => 1, "D" => 0),
+			"tags" => array("A" => 5, "B" => 4, "C" => 3, "D" => 0),
+			"links" => array("A" => 5, "B" => 4, "C" => 3, "D" => 0),
+			"links_internos" => array("A" => 4, "B" => 3, "C" => 2, "D" => 0),
+			"links_externos_follow" => array( "D" => 1, "A" => 0, "B" => 0, "C" => 0),
+			"links50" => array("A" => 1, "B" => -1, "C" => -1, "D" => -1)
+		);
+
+
+
+		$matriz_puntos =  array(
+			"title" => array("A" => 200, "B" => 80, "C" => 60, "D" => 0),
+			"meta" => array("A" => 200, "B" => 80, "C" => 60, "D" => 0),
+			"autor" => array("A" => 50, "B" => 0, "C" => 0, "D" => 0),
+			"cuerpo" => array("A" => 100, "B" => 80, "C" => 50, "D" => 0),
+			"imgs" => array("A" => 200, "B" => 80, "C" => 60, "D" => 0),
+			"alts" => array("A" => 100, "B" => 0, "C" => 0, "D" => 0),
+			"pies" => array("A" => 50, "B" => 0, "C" => 0, "D" => 0),
+			"vids" => array("A" => 100, "B" => 80, "C" => 0, "D" => 0),
+			"maps" => array("A" => 100, "B" => 0, "C" => 0, "D" => 0),
+			"neg" => array("A" => 100, "B" => 60, "C" => 40, "D" => 0),
+			"ladillos" => array("A" => 100, "B" => 50, "C" => 25, "D" => 0),
+			"tags" => array("A" => 100, "B" => 50, "C" => 25, "D" => 0),
+			"links" => array("A" => 100, "B" => 50, "C" => 25, "D" => 0),
+			"links_internos" => array("A" => 200, "B" => 150, "C" => 100, "D" => 0),
+			"links_externos_follow" => array("A" => 500, "B" => 500, "C" => 500, "D" => 0),
+			"links50" => array("A" => 100, "B" => 0, "C" => 0, "D" => 0)
+		);
+
+
+
+		foreach ($matriz_valores as $param => $valor) {
+
+			$found = false;
+
+			foreach ($valor as $key => $value) {
+
+				if (${$param} >= $value && !$found) { 
+
+					${"punt_" . $param} = $matriz_puntos[$param][$key];
+					$found = true;
+				}
+			}
 		}
 
-		if ($meta >= 100) {
-			$punt_meta = 200;
-		} elseif ($meta >= 80) {
-			$punt_meta = 80;
-		} elseif ($meta >= 60) {
-			$punt_meta = 60;
-		} else {
-			$punt_meta = 0;
-		}
-
-		if ($autor == 1) {
-			$punt_autor = 50;
-		} else {
-			$punt_autor = 0;
-		}
-
-		if ($cuerpo >= 600) {
-			$punt_cuerpo = 100;
-		} elseif ($cuerpo >= 500) {
-			$punt_cuerpo = 80;
-		} elseif ($cuerpo >= 350) {
-			$punt_cuerpo = 50;
-		} else {
-			$punt_cuerpo = 0;
-		}
-
-		if ($imgs >= 3) {
-			$punt_imgs = 100;
-		} elseif ($imgs == 2) {
-			$punt_imgs = 80;
-		} elseif ($imgs == 1) {
-			$punt_imgs = 60;
-		} else {
-			$punt_imgs = 0;
-		}
-
-		if ($conteo_alts == $imgs) {
-			$punt_alts = 100;
-		} else {
-			$punt_alts = 0;
-		}
-
-		if ($conteo_pie == $imgs) {
-			$punt_pies = 50;
-		} else {
-			$punt_pies = 0;
-		}
-
-		if ($conteo_vids >= 2) {
-			$punt_vids = 100;
-		} elseif ($conteo_vids == 1) {
-			$punt_vids = 80;
-		} else {
-			$punt_vids = 0;
-		}
-
-		if ($conteo_mapas >= 1) {
-			$punt_maps = 100;
-		} else {
-			$punt_maps = 0;
-		}
-
-		if ($neg >= 9) {
-			$punt_neg = 100;
-		} elseif ($neg >= 7) {
-			$punt_neg = 60;
-		} elseif ($neg >= 5) {
-			$punt_neg = 40;
-		} else {
-			$punt_neg = 0;
-		}
-
-		if ($ladillos >= 3) {
-			$punt_lad = 100;
-		} elseif ($ladillos >= 2) {
-			$punt_lad = 50;
-		} elseif ($ladillos >= 1) {
-			$punt_lad = 25;
-		} else {
-			$punt_lad = 0;
-		}
-
-		if ($tags >= 5) {
-			$punt_tags = 100;
-		} elseif ($tags >= 4) {
-			$punt_tags = 50;
-		} elseif ($tags >= 3) {
-			$punt_tags = 25;
-		} else {
-			$punt_tags = 0;
-		}
-
-		if ($enlaces >= 5) {
-			$punt_enlaces = 100;
-		} elseif ($enlaces >= 4) {
-			$punt_enlaces = 50;
-		} elseif ($enlaces >= 3) {
-			$punt_enlaces = 25;
-		} else {
-			$punt_enlaces = 0;
-		}
-
-		if ($enlaces_internos >= 4) {
-			$punt_enlaces_int = 200;
-		} elseif ($enlaces_internos >= 3) {
-			$punt_enlaces_int = 150;
-		} elseif ($enlaces_internos >= 2) {
-			$punt_enlaces_int = 100;
-		} else {
-			$punt_enlaces_int = 0;
-		}
-
-		if ($enlaces_ext_follow >= 1) {
-			$punt_enlaces_follow = 0;
-		} else {
-			$punt_enlaces_follow = 500;
-		}
-
-		if ($link_50 == 1) {
-			$punt_link50 = 100;
-		} else {
-			$punt_link50 = 0;
-		}
-
+		
 		$data = array(
 			'title_long' => $title,
 			'meta_long' => $meta,
@@ -288,39 +212,39 @@ class scrap extends CI_Controller
 			'cuerpo_long' => $cuerpo,
 			'lad_long' => $ladillos,
 			'negrita' => $neg,
-			'links' => $enlaces,
-			'spon_nofol' => $enlaces_externos,
-			'link50' => $link_50,
-			'mapas' => $conteo_mapas,
+			'links' => $links,
+			'spon_nofol' => $links_externos,
+			'link50' => $links50,
+			'mapas' => $maps,
 			'imagenes' => $imgs,
-			'alt_title' => $conteo_alts,
-			'pies' => $conteo_pie,
-			'videos' => $conteo_vids,
+			'alt_title' => $alts,
+			'pies' => $pies,
+			'videos' => $vids,
 			'tags' => $tags
 		);
 
-		$json=array(
-			'Title'=>$punt_title,
-			'Desc'=>$punt_meta,
-			'Autor'=>$punt_autor,
-			'Cuerpo'=>$punt_cuerpo,
-			'Imágenes'=>$punt_imgs,
-			'Alt-Title'=>$punt_alts,
-			'Pies de foto'=>$punt_pies,
-			'Vídeos'=>$punt_vids,
-			'Mapas'=>$punt_maps,
-			'Negritas'=>$punt_neg,
-			'Ladillos'=>$punt_lad,
-			'Tags'=>$punt_tags,
-			'Número enlaces'=>$punt_enlaces,
-			'Enlaces internos'=>$punt_enlaces_int,
-			'Enlaces externos dofollow'=>$punt_enlaces_follow,
-			'Enlaces después del 50%'=>$punt_link50
+		$json = array(
+			'Title' => $punt_title,
+			'Desc' => $punt_meta,
+			'Autor' => $punt_autor,
+			'Cuerpo' => $punt_cuerpo,
+			'Imágenes' => $punt_imgs,
+			'Alt-Title' => $punt_alts,
+			'Pies de foto' => $punt_pies,
+			'Vídeos' => $punt_vids,
+			'Mapas' => $punt_maps,
+			'Negritas' => $punt_neg,
+			'Ladillos' => $punt_ladillos,
+			'Tags' => $punt_tags,
+			'Número enlaces' => $punt_links,
+			'Enlaces internos' => $punt_links_internos,
+			'Enlaces externos dofollow' => $punt_links_externos_follow,
+			'Enlaces después del 50%' => $punt_links50
 		);
 
-		$res_json = json_encode($json,JSON_UNESCAPED_UNICODE);
+		$res_json = json_encode($json, JSON_UNESCAPED_UNICODE);
 		echo $res_json;
-		
+
 		$this->load->view('scrap_res', $data);
 	}
 }
