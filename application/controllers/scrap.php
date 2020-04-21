@@ -3,16 +3,17 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 require "application/libraries/vendor/autoload.php";
 
+use chriskacerguis\RestServer\RestController;
 use Goutte\Client;
 
-class scrap extends CI_Controller
+
+class scrap extends RestController
 {
 
-	public function index()
+	public function index_get()
 	{
 
-		$this->load->view('main');
-		$url =  $_POST['scrap_url'];
+		$url =  $_GET['scrap_url'];
 		$client = new Client();
 		$crawler = $client->request('GET', $url);
 		$metas = get_meta_tags($url);
@@ -204,28 +205,9 @@ class scrap extends CI_Controller
 			}
 		}
 
-		
-		$data = array(
-			'title_long' => $title,
-			'meta_long' => $meta,
-			'firma' => $autor,
-			'cuerpo_long' => $cuerpo,
-			'lad_long' => $ladillos,
-			'negrita' => $neg,
-			'links' => $links,
-			'spon_nofol' => $links_externos,
-			'link50' => $links50,
-			'mapas' => $maps,
-			'imagenes' => $imgs,
-			'alt_title' => $alts,
-			'pies' => $pies,
-			'videos' => $vids,
-			'tags' => $tags
-		);
-
 		$json = array(
 			'Title' => $punt_title,
-			'Desc' => $punt_meta,
+			'Meta' => $punt_meta,
 			'Autor' => $punt_autor,
 			'Cuerpo' => $punt_cuerpo,
 			'Imágenes' => $punt_imgs,
@@ -242,9 +224,6 @@ class scrap extends CI_Controller
 			'Enlaces después del 50%' => $punt_links50
 		);
 
-		$res_json = json_encode($json, JSON_UNESCAPED_UNICODE);
-		echo $res_json;
-
-		$this->load->view('scrap_res', $data);
+		$this->response($json);
 	}
 }
