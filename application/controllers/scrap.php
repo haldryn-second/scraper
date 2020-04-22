@@ -206,7 +206,9 @@ class scrap extends RestController
 		}
 
 		$json = array(
-			'Title' => $punt_title,
+			'estado'=>"ok",
+			'code'=>"200",
+			'data'=>array('Title' => $punt_title,
 			'Meta' => $punt_meta,
 			'Autor' => $punt_autor,
 			'Cuerpo' => $punt_cuerpo,
@@ -221,7 +223,7 @@ class scrap extends RestController
 			'Número enlaces' => $punt_links,
 			'Enlaces internos' => $punt_links_internos,
 			'Enlaces externos dofollow' => $punt_links_externos_follow,
-			'Enlaces después del 50%' => $punt_links50
+			'Enlaces después del 50%' => $punt_links50)
 		);
 
 		$this->response($json);
