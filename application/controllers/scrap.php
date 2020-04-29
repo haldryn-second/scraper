@@ -6,7 +6,6 @@ require "application/libraries/vendor/autoload.php";
 use chriskacerguis\RestServer\RestController;
 use Goutte\Client;
 
-
 class scrap extends RestController
 {
 
