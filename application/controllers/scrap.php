@@ -199,6 +199,7 @@ class scrap extends RestController
 				if (${$param} >= $value && !$found) { 
 
 					${"punt_" . $param} = $matriz_puntos[$param][$key];
+					${"punt_" . $param. "_max"} = $matriz_puntos[$param]["A"];
 					$found = true;
 				}
 			}
@@ -207,22 +208,22 @@ class scrap extends RestController
 		$json = array(
 			'estado'=>"ok",
 			'code'=>"200",
-			'data'=>array('Title' => $punt_title,
-			'Meta' => $punt_meta,
-			'Autor' => $punt_autor,
-			'Cuerpo' => $punt_cuerpo,
-			'Imágenes' => $punt_imgs,
-			'Alt-Title' => $punt_alts,
-			'Pies de foto' => $punt_pies,
-			'Vídeos' => $punt_vids,
-			'Mapas' => $punt_maps,
-			'Negritas' => $punt_neg,
-			'Ladillos' => $punt_ladillos,
-			'Tags' => $punt_tags,
-			'Número enlaces' => $punt_links,
-			'Enlaces internos' => $punt_links_internos,
-			'Enlaces externos dofollow' => $punt_links_externos_follow,
-			'Enlaces después del 50%' => $punt_links50)
+			'data'=>array('Title' => array("Puntos" => $punt_title, "Max Puntos" => $punt_title_max),
+			'Meta' => array("Puntos" =>$punt_meta, "Max Puntos" => $punt_meta_max),
+			'Autor' => array("Puntos" =>$punt_autor, "Max Puntos" => $punt_autor_max),
+			'Cuerpo' => array("Puntos" =>$punt_cuerpo, "Max Puntos" => $punt_cuerpo_max),
+			'Imágenes' => array("Puntos" =>$punt_imgs, "Max Puntos" => $punt_imgs_max),
+			'Alt-Title' => array("Puntos" =>$punt_alts, "Max Puntos" => $punt_alts_max),
+			'Pies de foto' => array("Puntos" =>$punt_pies, "Max Puntos" => $punt_pies_max),
+			'Vídeos' => array("Puntos" =>$punt_vids, "Max Puntos" => $punt_vids_max),
+			'Mapas' => array("Puntos" =>$punt_maps, "Max Puntos" => $punt_maps_max),
+			'Negritas' => array("Puntos" =>$punt_neg, "Max Puntos" => $punt_neg_max),
+			'Ladillos' => array("Puntos" =>$punt_ladillos, "Max Puntos" => $punt_ladillos_max),
+			'Tags' => array("Puntos" =>$punt_tags, "Max Puntos" => $punt_tags_max),
+			'Número enlaces' => array("Puntos" =>$punt_links, "Max Puntos" => $punt_links_max),
+			'Enlaces internos' => array("Puntos" =>$punt_links_internos, "Max Puntos" => $punt_links_internos_max),
+			'Enlaces externos dofollow' => array("Puntos" =>$punt_links_externos_follow, "Max Puntos" => $punt_links_externos_follow_max),
+			'Enlaces después del 50%' => array("Puntos" =>$punt_links50, "Max Puntos" => $punt_links50_max))
 		);
 
 		$this->response($json);
