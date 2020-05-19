@@ -21,7 +21,6 @@ class scrap extends REST_Controller
 		$crawler = $client->request('GET', $url);
 		$metas = get_meta_tags($url);
 		
-
 		$selector_title = 'title';
 		$selector_negrita = 'span[itemprop="articleBody"] strong';
 		$selector_negrita_h2 = 'span[itemprop="articleBody"] h2 strong';
