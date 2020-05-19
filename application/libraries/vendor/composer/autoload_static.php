@@ -18,10 +18,6 @@ class ComposerStaticInitd25f6c5eaf946609b0092143b83bab81
     );
 
     public static $prefixLengthsPsr4 = array (
-        'c' => 
-        array (
-            'chriskacerguis\\RestServer\\' => 26,
-        ),
         'S' => 
         array (
             'Symfony\\Polyfill\\Php72\\' => 23,
@@ -46,10 +42,6 @@ class ComposerStaticInitd25f6c5eaf946609b0092143b83bab81
     );
 
     public static $prefixDirsPsr4 = array (
-        'chriskacerguis\\RestServer\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/chriskacerguis/codeigniter-restserver/src',
-        ),
         'Symfony\\Polyfill\\Php72\\' => 
         array (
             0 => __DIR__ . '/..' . '/symfony/polyfill-php72',
@@ -100,11 +92,17 @@ class ComposerStaticInitd25f6c5eaf946609b0092143b83bab81
         ),
     );
 
+    public static $classMap = array (
+        'Format' => __DIR__ . '/..' . '/chriskacerguis/codeigniter-restserver/application/libraries/Format.php',
+        'REST_Controller' => __DIR__ . '/..' . '/chriskacerguis/codeigniter-restserver/application/libraries/REST_Controller.php',
+    );
+
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
             $loader->prefixLengthsPsr4 = ComposerStaticInitd25f6c5eaf946609b0092143b83bab81::$prefixLengthsPsr4;
             $loader->prefixDirsPsr4 = ComposerStaticInitd25f6c5eaf946609b0092143b83bab81::$prefixDirsPsr4;
+            $loader->classMap = ComposerStaticInitd25f6c5eaf946609b0092143b83bab81::$classMap;
 
         }, null, ClassLoader::class);
     }

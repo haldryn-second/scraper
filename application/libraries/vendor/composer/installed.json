@@ -1,26 +1,31 @@
 [
     {
         "name": "chriskacerguis/codeigniter-restserver",
-        "version": "3.1.1",
-        "version_normalized": "3.1.1.0",
+        "version": "3.0.3",
+        "version_normalized": "3.0.3.0",
         "source": {
             "type": "git",
             "url": "https://github.com/chriskacerguis/codeigniter-restserver.git",
-            "reference": "6ced70d12c7e8d207eaded3f208a201330950b57"
+            "reference": "3a5ba0dffdebd24cc215ef714b72208c88304203"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/chriskacerguis/codeigniter-restserver/zipball/6ced70d12c7e8d207eaded3f208a201330950b57",
-            "reference": "6ced70d12c7e8d207eaded3f208a201330950b57",
+            "url": "https://api.github.com/repos/chriskacerguis/codeigniter-restserver/zipball/3a5ba0dffdebd24cc215ef714b72208c88304203",
+            "reference": "3a5ba0dffdebd24cc215ef714b72208c88304203",
             "shasum": ""
         },
-        "time": "2019-11-12T15:39:34+00:00",
+        "require": {
+            "codeigniter/framework": "^3.0.4",
+            "php": ">=5.4.0"
+        },
+        "time": "2017-09-23T16:44:55+00:00",
         "type": "library",
         "installation-source": "dist",
         "autoload": {
-            "psr-4": {
-                "chriskacerguis\\RestServer\\": "src/"
-            }
+            "classmap": [
+                "application/libraries/Format.php",
+                "application/libraries/REST_Controller.php"
+            ]
         },
         "notification-url": "https://packagist.org/downloads/",
         "license": [
@@ -29,41 +34,77 @@
         "authors": [
             {
                 "name": "Chris Kacerguis",
-                "email": "chriskacerguis@gmail.com"
+                "role": "Developer"
             }
         ],
-        "description": "CI Rest Server"
+        "description": "REST Server for the CodeIgniter framework",
+        "homepage": "https://github.com/chriskacerguis/codeigniter-restserver"
     },
     {
-        "name": "fabpot/goutte",
-        "version": "v3.3.0",
-        "version_normalized": "3.3.0.0",
+        "name": "codeigniter/framework",
+        "version": "3.1.11",
+        "version_normalized": "3.1.11.0",
         "source": {
             "type": "git",
-            "url": "https://github.com/FriendsOfPHP/Goutte.git",
-            "reference": "4ab5199e3ec0ffde0ee0b5ecf568a4fb8398dbae"
+            "url": "https://github.com/bcit-ci/CodeIgniter.git",
+            "reference": "b73eb19aed66190c10c9cad476da7c36c271d6dc"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/FriendsOfPHP/Goutte/zipball/4ab5199e3ec0ffde0ee0b5ecf568a4fb8398dbae",
-            "reference": "4ab5199e3ec0ffde0ee0b5ecf568a4fb8398dbae",
+            "url": "https://api.github.com/repos/bcit-ci/CodeIgniter/zipball/b73eb19aed66190c10c9cad476da7c36c271d6dc",
+            "reference": "b73eb19aed66190c10c9cad476da7c36c271d6dc",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.3.7"
+        },
+        "require-dev": {
+            "mikey179/vfsstream": "1.1.*",
+            "phpunit/phpunit": "4.* || 5.*"
+        },
+        "suggest": {
+            "paragonie/random_compat": "Provides better randomness in PHP 5.x"
+        },
+        "time": "2019-09-19T12:08:45+00:00",
+        "type": "project",
+        "installation-source": "dist",
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "description": "The CodeIgniter framework",
+        "homepage": "https://codeigniter.com"
+    },
+    {
+        "name": "fabpot/goutte",
+        "version": "v3.2.3",
+        "version_normalized": "3.2.3.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/FriendsOfPHP/Goutte.git",
+            "reference": "3f0eaf0a40181359470651f1565b3e07e3dd31b8"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/FriendsOfPHP/Goutte/zipball/3f0eaf0a40181359470651f1565b3e07e3dd31b8",
+            "reference": "3f0eaf0a40181359470651f1565b3e07e3dd31b8",
             "shasum": ""
         },
         "require": {
             "guzzlehttp/guzzle": "^6.0",
-            "php": "^7.1.3",
-            "symfony/browser-kit": "^4.4|^5.0",
-            "symfony/css-selector": "^4.4|^5.0",
-            "symfony/dom-crawler": "^4.4|^5.0"
+            "php": ">=5.5.0",
+            "symfony/browser-kit": "~2.1|~3.0|~4.0",
+            "symfony/css-selector": "~2.1|~3.0|~4.0",
+            "symfony/dom-crawler": "~2.1|~3.0|~4.0"
         },
         "require-dev": {
-            "symfony/phpunit-bridge": "^5.0"
+            "symfony/phpunit-bridge": "^3.3 || ^4"
         },
-        "time": "2019-12-06T13:11:18+00:00",
+        "time": "2018-06-29T15:13:57+00:00",
         "type": "application",
         "extra": {
             "branch-alias": {
-                "dev-master": "3.3-dev"
+                "dev-master": "3.2-dev"
             }
         },
         "installation-source": "dist",
@@ -382,37 +423,37 @@
     },
     {
         "name": "symfony/browser-kit",
-        "version": "v5.0.7",
-        "version_normalized": "5.0.7.0",
+        "version": "v4.4.8",
+        "version_normalized": "4.4.8.0",
         "source": {
             "type": "git",
             "url": "https://github.com/symfony/browser-kit.git",
-            "reference": "0fa03cfaf1155eedbef871eef1a64c427e624c56"
+            "reference": "e4b0dc1b100bf75b5717c5b451397f230a618a42"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/symfony/browser-kit/zipball/0fa03cfaf1155eedbef871eef1a64c427e624c56",
-            "reference": "0fa03cfaf1155eedbef871eef1a64c427e624c56",
+            "url": "https://api.github.com/repos/symfony/browser-kit/zipball/e4b0dc1b100bf75b5717c5b451397f230a618a42",
+            "reference": "e4b0dc1b100bf75b5717c5b451397f230a618a42",
             "shasum": ""
         },
         "require": {
-            "php": "^7.2.5",
-            "symfony/dom-crawler": "^4.4|^5.0"
+            "php": "^7.1.3",
+            "symfony/dom-crawler": "^3.4|^4.0|^5.0"
         },
         "require-dev": {
-            "symfony/css-selector": "^4.4|^5.0",
-            "symfony/http-client": "^4.4|^5.0",
-            "symfony/mime": "^4.4|^5.0",
-            "symfony/process": "^4.4|^5.0"
+            "symfony/css-selector": "^3.4|^4.0|^5.0",
+            "symfony/http-client": "^4.3|^5.0",
+            "symfony/mime": "^4.3|^5.0",
+            "symfony/process": "^3.4|^4.0|^5.0"
         },
         "suggest": {
             "symfony/process": ""
         },
-        "time": "2020-03-30T11:42:42+00:00",
+        "time": "2020-03-28T10:15:50+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
-                "dev-master": "5.0-dev"
+                "dev-master": "4.4-dev"
             }
         },
         "installation-source": "dist",
@@ -457,27 +498,27 @@
     },
     {
         "name": "symfony/css-selector",
-        "version": "v5.0.7",
-        "version_normalized": "5.0.7.0",
+        "version": "v4.4.8",
+        "version_normalized": "4.4.8.0",
         "source": {
             "type": "git",
             "url": "https://github.com/symfony/css-selector.git",
-            "reference": "5f8d5271303dad260692ba73dfa21777d38e124e"
+            "reference": "afc26133a6fbdd4f8842e38893e0ee4685c7c94b"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/symfony/css-selector/zipball/5f8d5271303dad260692ba73dfa21777d38e124e",
-            "reference": "5f8d5271303dad260692ba73dfa21777d38e124e",
+            "url": "https://api.github.com/repos/symfony/css-selector/zipball/afc26133a6fbdd4f8842e38893e0ee4685c7c94b",
+            "reference": "afc26133a6fbdd4f8842e38893e0ee4685c7c94b",
             "shasum": ""
         },
         "require": {
-            "php": "^7.2.5"
+            "php": "^7.1.3"
         },
-        "time": "2020-03-27T16:56:45+00:00",
+        "time": "2020-03-27T16:54:36+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
-                "dev-master": "5.0-dev"
+                "dev-master": "4.4-dev"
             }
         },
         "installation-source": "dist",
@@ -526,21 +567,21 @@
     },
     {
         "name": "symfony/dom-crawler",
-        "version": "v5.0.7",
-        "version_normalized": "5.0.7.0",
+        "version": "v4.4.8",
+        "version_normalized": "4.4.8.0",
         "source": {
             "type": "git",
             "url": "https://github.com/symfony/dom-crawler.git",
-            "reference": "892311d23066844a267ac1a903d8a9d79968a1a7"
+            "reference": "4d0fb3374324071ecdd94898367a3fa4b5563162"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/symfony/dom-crawler/zipball/892311d23066844a267ac1a903d8a9d79968a1a7",
-            "reference": "892311d23066844a267ac1a903d8a9d79968a1a7",
+            "url": "https://api.github.com/repos/symfony/dom-crawler/zipball/4d0fb3374324071ecdd94898367a3fa4b5563162",
+            "reference": "4d0fb3374324071ecdd94898367a3fa4b5563162",
             "shasum": ""
         },
         "require": {
-            "php": "^7.2.5",
+            "php": "^7.1.3",
             "symfony/polyfill-ctype": "~1.8",
             "symfony/polyfill-mbstring": "~1.0"
         },
@@ -549,16 +590,16 @@
         },
         "require-dev": {
             "masterminds/html5": "^2.6",
-            "symfony/css-selector": "^4.4|^5.0"
+            "symfony/css-selector": "^3.4|^4.0|^5.0"
         },
         "suggest": {
             "symfony/css-selector": ""
         },
-        "time": "2020-03-30T11:42:42+00:00",
+        "time": "2020-03-29T19:12:22+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
-                "dev-master": "5.0-dev"
+                "dev-master": "4.4-dev"
             }
         },
         "installation-source": "dist",
@@ -603,17 +644,17 @@
     },
     {
         "name": "symfony/polyfill-ctype",
-        "version": "v1.15.0",
-        "version_normalized": "1.15.0.0",
+        "version": "v1.17.0",
+        "version_normalized": "1.17.0.0",
         "source": {
             "type": "git",
             "url": "https://github.com/symfony/polyfill-ctype.git",
-            "reference": "4719fa9c18b0464d399f1a63bf624b42b6fa8d14"
+            "reference": "e94c8b1bbe2bc77507a1056cdb06451c75b427f9"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/symfony/polyfill-ctype/zipball/4719fa9c18b0464d399f1a63bf624b42b6fa8d14",
-            "reference": "4719fa9c18b0464d399f1a63bf624b42b6fa8d14",
+            "url": "https://api.github.com/repos/symfony/polyfill-ctype/zipball/e94c8b1bbe2bc77507a1056cdb06451c75b427f9",
+            "reference": "e94c8b1bbe2bc77507a1056cdb06451c75b427f9",
             "shasum": ""
         },
         "require": {
@@ -622,11 +663,11 @@
         "suggest": {
             "ext-ctype": "For best performance"
         },
-        "time": "2020-02-27T09:26:54+00:00",
+        "time": "2020-05-12T16:14:59+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
-                "dev-master": "1.15-dev"
+                "dev-master": "1.17-dev"
             }
         },
         "installation-source": "dist",
@@ -677,17 +718,17 @@
     },
     {
         "name": "symfony/polyfill-intl-idn",
-        "version": "v1.15.0",
-        "version_normalized": "1.15.0.0",
+        "version": "v1.17.0",
+        "version_normalized": "1.17.0.0",
         "source": {
             "type": "git",
             "url": "https://github.com/symfony/polyfill-intl-idn.git",
-            "reference": "47bd6aa45beb1cd7c6a16b7d1810133b728bdfcf"
+            "reference": "3bff59ea7047e925be6b7f2059d60af31bb46d6a"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/symfony/polyfill-intl-idn/zipball/47bd6aa45beb1cd7c6a16b7d1810133b728bdfcf",
-            "reference": "47bd6aa45beb1cd7c6a16b7d1810133b728bdfcf",
+            "url": "https://api.github.com/repos/symfony/polyfill-intl-idn/zipball/3bff59ea7047e925be6b7f2059d60af31bb46d6a",
+            "reference": "3bff59ea7047e925be6b7f2059d60af31bb46d6a",
             "shasum": ""
         },
         "require": {
@@ -698,11 +739,11 @@
         "suggest": {
             "ext-intl": "For best performance"
         },
-        "time": "2020-03-09T19:04:49+00:00",
+        "time": "2020-05-12T16:47:27+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
-                "dev-master": "1.15-dev"
+                "dev-master": "1.17-dev"
             }
         },
         "installation-source": "dist",
@@ -755,17 +796,17 @@
     },
     {
         "name": "symfony/polyfill-mbstring",
-        "version": "v1.15.0",
-        "version_normalized": "1.15.0.0",
+        "version": "v1.17.0",
+        "version_normalized": "1.17.0.0",
         "source": {
             "type": "git",
             "url": "https://github.com/symfony/polyfill-mbstring.git",
-            "reference": "81ffd3a9c6d707be22e3012b827de1c9775fc5ac"
+            "reference": "fa79b11539418b02fc5e1897267673ba2c19419c"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/symfony/polyfill-mbstring/zipball/81ffd3a9c6d707be22e3012b827de1c9775fc5ac",
-            "reference": "81ffd3a9c6d707be22e3012b827de1c9775fc5ac",
+            "url": "https://api.github.com/repos/symfony/polyfill-mbstring/zipball/fa79b11539418b02fc5e1897267673ba2c19419c",
+            "reference": "fa79b11539418b02fc5e1897267673ba2c19419c",
             "shasum": ""
         },
         "require": {
@@ -774,11 +815,11 @@
         "suggest": {
             "ext-mbstring": "For best performance"
         },
-        "time": "2020-03-09T19:04:49+00:00",
+        "time": "2020-05-12T16:47:27+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
-                "dev-master": "1.15-dev"
+                "dev-master": "1.17-dev"
             }
         },
         "installation-source": "dist",
@@ -830,27 +871,27 @@
     },
     {
         "name": "symfony/polyfill-php72",
-        "version": "v1.15.0",
-        "version_normalized": "1.15.0.0",
+        "version": "v1.17.0",
+        "version_normalized": "1.17.0.0",
         "source": {
             "type": "git",
             "url": "https://github.com/symfony/polyfill-php72.git",
-            "reference": "37b0976c78b94856543260ce09b460a7bc852747"
+            "reference": "f048e612a3905f34931127360bdd2def19a5e582"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/symfony/polyfill-php72/zipball/37b0976c78b94856543260ce09b460a7bc852747",
-            "reference": "37b0976c78b94856543260ce09b460a7bc852747",
+            "url": "https://api.github.com/repos/symfony/polyfill-php72/zipball/f048e612a3905f34931127360bdd2def19a5e582",
+            "reference": "f048e612a3905f34931127360bdd2def19a5e582",
             "shasum": ""
         },
         "require": {
             "php": ">=5.3.3"
         },
-        "time": "2020-02-27T09:26:54+00:00",
+        "time": "2020-05-12T16:47:27+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
-                "dev-master": "1.15-dev"
+                "dev-master": "1.17-dev"
             }
         },
         "installation-source": "dist",

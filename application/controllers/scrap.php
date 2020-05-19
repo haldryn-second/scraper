@@ -3,10 +3,14 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 require "application/libraries/vendor/autoload.php";
 
-use chriskacerguis\RestServer\RestController;
+// use chriskacerguis\RestServer\RestController;
 use Goutte\Client;
 
-class scrap extends RestController
+use Restserver\Libraries\REST_Controller;
+require APPPATH . '/libraries/REST_Controller.php';
+require APPPATH . '/libraries/Format.php';
+
+class scrap extends REST_Controller
 {
 
 	public function index_get()
@@ -16,6 +20,7 @@ class scrap extends RestController
 		$client = new Client();
 		$crawler = $client->request('GET', $url);
 		$metas = get_meta_tags($url);
+		
 
 		$selector_title = 'title';
 		$selector_negrita = 'span[itemprop="articleBody"] strong';
@@ -44,6 +49,7 @@ class scrap extends RestController
 		$output = $metas['description'];
 		$meta = strlen($output);
 
+		
 		//FIRMA DEL AUTOR
 		$output = $crawler->filter($selector_redactor)->extract(array('_text'));
 		if (isset(($output[0]))) $autor = 1;
@@ -225,7 +231,6 @@ class scrap extends RestController
 			'Enlaces externos dofollow' => array("Puntos" =>$punt_links_externos_follow, "Max Puntos" => $punt_links_externos_follow_max),
 			'Enlaces después del 50%' => array("Puntos" =>$punt_links50, "Max Puntos" => $punt_links50_max))
 		);
-
-		$this->response($json);
+		 $this->response($json);
 	}
 }

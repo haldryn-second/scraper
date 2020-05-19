@@ -13,12 +13,17 @@ namespace Symfony\Component\BrowserKit;
 
 /**
  * @author Fabien Potencier <fabien@symfony.com>
+ *
+ * @final since Symfony 4.3
  */
-final class Response
+class Response
 {
-    private $content;
-    private $status;
-    private $headers;
+    /** @internal */
+    protected $content;
+    /** @internal */
+    protected $status;
+    /** @internal */
+    protected $headers;
 
     /**
      * The headers array is a set of key/value pairs. If a header is present multiple times
@@ -40,7 +45,7 @@ final class Response
      *
      * @return string The response with headers and content
      */
-    public function __toString(): string
+    public function __toString()
     {
         $headers = '';
         foreach ($this->headers as $name => $value) {
@@ -57,13 +62,44 @@ final class Response
     }
 
     /**
+     * Returns the build header line.
+     *
+     * @param string $name  The header name
+     * @param string $value The header value
+     *
+     * @return string The built header line
+     *
+     * @deprecated since Symfony 4.3
+     */
+    protected function buildHeader($name, $value)
+    {
+        @trigger_error(sprintf('The "%s()" method is deprecated since Symfony 4.3.', __METHOD__), E_USER_DEPRECATED);
+
+        return sprintf("%s: %s\n", $name, $value);
+    }
+
+    /**
      * Gets the response content.
      *
      * @return string The response content
      */
-    public function getContent(): string
+    public function getContent()
     {
         return $this->content;
+    }
+
+    /**
+     * Gets the response status code.
+     *
+     * @return int The response status code
+     *
+     * @deprecated since Symfony 4.3, use getStatusCode() instead
+     */
+    public function getStatus()
+    {
+        @trigger_error(sprintf('The "%s()" method is deprecated since Symfony 4.3, use getStatusCode() instead.', __METHOD__), E_USER_DEPRECATED);
+
+        return $this->status;
     }
 
     public function getStatusCode(): int
@@ -76,7 +112,7 @@ final class Response
      *
      * @return array The response headers
      */
-    public function getHeaders(): array
+    public function getHeaders()
     {
         return $this->headers;
     }
@@ -84,9 +120,12 @@ final class Response
     /**
      * Gets a response header.
      *
+     * @param string $header The header name
+     * @param bool   $first  Whether to return the first value or all header values
+     *
      * @return string|array The first header value if $first is true, an array of values otherwise
      */
-    public function getHeader(string $header, bool $first = true)
+    public function getHeader($header, $first = true)
     {
         $normalizedHeader = str_replace('-', '_', strtolower($header));
         foreach ($this->headers as $key => $value) {
