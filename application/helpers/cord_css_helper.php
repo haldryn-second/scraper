@@ -1,0 +1,18 @@
+$selector_title = 'title';
+		$selector_negrita = 'div.Contenidos strong';
+		$selector_negrita_h2 = 'div.Contenidos h2 strong';
+		$selector_negrita_h3 = 'div.Contenidos h3 strong';
+		$selector_negrita_a = 'div.Contenidos a strong';
+		$selector_negrita_a_str = 'div.Contenidos a +strong';
+		$selector_negrita_str_a = 'div.Contenidos strong+a';
+		$selector_img = 'div.Contenidos img';
+		$selector_img_autor = 'a.FotoAutorNoticia img';
+		$selector_cuerpo = 'div.Contenidos';
+		$selector_enlace = 'div.CuerpoDeNoticia a';
+		$selector_nofollow = 'div.CuerpoDeNoticia a[rel="nofollow"]';
+		$selector_sponsored = 'div.CuerpoDeNoticia a[rel="sponsored"]';
+		$selector_frame = 'iframe';
+		$selector_ladillos = 'div.Contenidos h2+p';
+		$selector_pie_foto = 'div.Contenidos p.PieDeFoto';
+		$selector_redactor = 'p.AutorDeNoticia a';
+		$selector_tags = 'div.ListadodeBotones ul li';
