@@ -20,32 +20,18 @@ class scrap extends REST_Controller
 		$client = new Client();
 		$crawler = $client->request('GET', $url);
 
+		$final_url=substr($url,-10);
+		//print_r($final_url);
+
+		if (preg_match("/^\d{5}\.html$/", $final_url)){
+
 		include 'selects_css.php';
-
-		//SCRAP DE METADATOS
-		$options  = array('http' => array('user_agent' => 'facebookexternalhit/1.1'));
-		$context  = stream_context_create($options);
-		$data = file_get_contents($url,false,$context);
-		$dom = new \DomDocument;
-		@$dom->loadHTML($data);
-		$xpath = new \DOMXPath($dom);
-		$metas = $xpath->query('//*/meta[starts-with(@property, \'og:\')]');
-		$og = array();
-		foreach($metas as $meta){
-			$property = str_replace('og:', '', $meta->getAttribute('property'));
-			$content = $meta->getAttribute('content');
-			$og[$property] = $content;
-			
-		}
-		$metas=$og['title'];
-		echo $metas;
-		$meta = strlen($metas);
-
 		
 		//CONTEO DE PALABRAS EN EL TITLE
 		$output = $crawler->filter($selector_title)->extract(array('_text'));
 		$title = strlen($output[0]);
 		
+		// print_r($metas) ;
 
 
 		// //CONTEO DE PALABRAS EN LA META DESCRIPCIÓN
@@ -241,5 +227,16 @@ class scrap extends REST_Controller
 			'Enlaces después del 50%' => array("Puntos" =>$punt_links50, "Max Puntos" => $punt_links50_max))
 		);
 		  $this->response($json);
+
+		}
+		else{
+
+		$json = array(
+			'estado'=>"ok",
+			'code'=>"200",
+			'data'=>array('Error' => "Esta url no es compatible con el sistema de análisis SEO")
+			);
+			$this->response($json);
+		}
 	}
 }

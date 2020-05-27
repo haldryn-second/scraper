@@ -1,10 +1,22 @@
 <?php 
 
 
-if ((substr($url, 0, 33) == "https://www.diarioinformacion.com") || (substr($url, 0, 26) == "https://www.informacion.es")) {
+if ((substr($url, 0, 33) == "https://www.diarioinformacion.com") ||
+	(substr($url, 0, 26) == "https://www.informacion.es")||
+	(substr($url, 0, 29) == "https://www.diaridegirona.cat")||
+	(substr($url, 0, 28) == "https://www.diariodeibiza.es")||
+	(substr($url, 0, 25) == "https://www.farodevigo.es")||
+	(substr($url, 0, 31) == "https://www.diariodemallorca.es")||
+	(substr($url, 0, 18) == "https://www.lne.es")||
+	(substr($url, 0, 30) == "https://www.laopinioncoruna.es")||
+	(substr($url, 0, 32) == "https://www.laopiniondemalaga.es")||
+	(substr($url, 0, 32) == "https://www.laopiniondezamora.es")||
+	(substr($url, 0, 32) == "https://www.laopiniondemurcia.es")||
+	(substr($url, 0, 26) == "https://www.laprovincia.es")||
+	(substr($url, 0, 27) == "https://www.levante-emv.com")) {
 
 	//SCRAP INFORMACION
-
+ 
 	$selector_title = 'title';
 	$selector_negrita = 'span[itemprop="articleBody"] strong';
 	$selector_negrita_h2 = 'span[itemprop="articleBody"] h2 strong';
@@ -24,18 +36,17 @@ if ((substr($url, 0, 33) == "https://www.diarioinformacion.com") || (substr($url
 	$selector_redactor = 'span.autor_sup a';
 	$selector_tags = 'div.etiquetasTag ul li';
 
-	//  $metas = get_meta_tags($url);
-	// echo (string) strlen($metas['description']);
-	
-	// $output = $metas['description'];
-	//  $meta = strlen($output);
-
-
-
+	$metas = get_meta_tags($url);
+	//print_r($metas);
+	$output = $metas['description'];
+	$meta = strlen($output);
 }
 
 
-else if ((substr($url, 0, 29) == "https://www.diariocordoba.com")||(substr($url, 0, 35) == "https://www.elperiodicodearagon.com")||(substr($url, 0, 39) == "https://www.elperiodicomediterraneo.com")||(substr($url, 0, 38) == "https://www.elperiodicoextremadura.com")){
+else if ((substr($url, 0, 29) == "https://www.diariocordoba.com")||
+	(substr($url, 0, 35) == "https://www.elperiodicodearagon.com")||
+	(substr($url, 0, 39) == "https://www.elperiodicomediterraneo.com")||
+	(substr($url, 0, 38) == "https://www.elperiodicoextremadura.com")){
 
 	//SCRAP CORDOBA - ARAGON - MEDITERRÁNEO - EXTREMADURA
 
@@ -60,5 +71,25 @@ else if ((substr($url, 0, 29) == "https://www.diariocordoba.com")||(substr($url,
 		$selector_redactor = 'p.AutorDeNoticia a';
 	}
 	$selector_tags = 'div.ListadodeBotones ul li';
+
+	
+	//SCRAP DE METADATOS
+	$options  = array('http' => array('user_agent' => 'facebookexternalhit/1.1'));
+	$context  = stream_context_create($options);
+	$data = file_get_contents($url,false,$context);
+	$dom = new \DomDocument;
+	@$dom->loadHTML($data);
+	$xpath = new \DOMXPath($dom);
+	$metas = $xpath->query('//*/meta[starts-with(@property, \'og:\')]');
+	$og = array();
+	foreach($metas as $meta){
+		$property = str_replace('og:', '', $meta->getAttribute('property'));
+		$content = $meta->getAttribute('content');
+		$og[$property] = $content;
+		
+	}
+	$metas=$og['description'];
+	$meta = strlen($metas);
 }
+
 ?>
