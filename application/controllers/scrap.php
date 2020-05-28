@@ -93,7 +93,7 @@ class scrap extends REST_Controller
 		$links_externos = ($nofollow + $sponsored);
 
 		$links_externos_follow = ($links - ($links_internos + $links_externos));
-
+		if ($links_externos_follow<0)$links_externos_follow=0;
 
 		// //ENLACES A PARTIR DEL 50%
 		$output = $crawler->filter($selector_cuerpo)->html();
@@ -147,7 +147,6 @@ class scrap extends REST_Controller
 		
 
 		// // //PUNTUACIONES
-
 
 		$matriz_valores = array(
 			"title" => array("A" => 70, "B" => 60, "C" => 45, "D" => 0),

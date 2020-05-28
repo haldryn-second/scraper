@@ -37,9 +37,15 @@ if ((substr($url, 0, 33) == "https://www.diarioinformacion.com") ||
 	$selector_tags = 'div.etiquetasTag ul li';
 
 	$metas = get_meta_tags($url);
-	//print_r($metas);
-	$output = $metas['description'];
-	$meta = strlen($output);
+
+	if(sizeof($metas) == 0) {
+		$meta=0;
+	} 
+	else{
+		//print_r($metas);
+		$output = $metas['description'];
+		$meta = strlen($output);
+	}
 }
 
 
