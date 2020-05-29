@@ -10,7 +10,7 @@ use Restserver\Libraries\REST_Controller;
 require APPPATH . '/libraries/REST_Controller.php';
 require APPPATH . '/libraries/Format.php';
 
-class scrap extends REST_Controller
+class Scrap extends REST_Controller
 {
 
 	public function index_get()

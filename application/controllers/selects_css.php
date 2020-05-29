@@ -95,7 +95,14 @@ else if ((substr($url, 0, 29) == "https://www.diariocordoba.com")||
 		
 	}
 	$metas=$og['description'];
-	$meta = strlen($metas);
+	if(sizeof($metas) == 0) {
+		$meta=0;
+	} 
+	else{
+		//print_r($metas);
+		$output = $metas['description'];
+		$meta = strlen($output);
+	}
 }
 
 ?>
