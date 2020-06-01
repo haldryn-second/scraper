@@ -72,7 +72,7 @@ class Scrap extends REST_Controller
 		$output = $crawler->filter($selector_enlace)->extract(array('href'));
 		$links = (count($output));
 		
-
+ 
 		$links_internos = 0;
 		for ($i = 0; $i < count($output); $i++) {
 			if ((substr($output[$i], 0, 33) == "https://www.diarioinformacion.com") || (substr($output[$i], 0, 26) == "https://www.informacion.es") || (substr($output[$i], 0, 1) == "/")) ++$links_internos;

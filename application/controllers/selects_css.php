@@ -1,6 +1,5 @@
 <?php 
 
-
 if ((substr($url, 0, 33) == "https://www.diarioinformacion.com") ||
 	(substr($url, 0, 26) == "https://www.informacion.es")||
 	(substr($url, 0, 29) == "https://www.diaridegirona.cat")||
@@ -13,10 +12,13 @@ if ((substr($url, 0, 33) == "https://www.diarioinformacion.com") ||
 	(substr($url, 0, 32) == "https://www.laopiniondezamora.es")||
 	(substr($url, 0, 32) == "https://www.laopiniondemurcia.es")||
 	(substr($url, 0, 26) == "https://www.laprovincia.es")||
-	(substr($url, 0, 27) == "https://www.levante-emv.com")) {
-
+	(substr($url, 0, 27) == "https://www.levante-emv.com")||
+	(substr($url, 0, 24) == "https://www.emporda.info")||
+	(substr($url, 0, 22) == "https://www.regio7.cat")||
+	(substr($url, 0, 20) == "https://www.eldia.es")) {
+		
 	//SCRAP INFORMACION
- 
+	
 	$selector_title = 'title';
 	$selector_negrita = 'span[itemprop="articleBody"] strong';
 	$selector_negrita_h2 = 'span[itemprop="articleBody"] h2 strong';
@@ -94,15 +96,26 @@ else if ((substr($url, 0, 29) == "https://www.diariocordoba.com")||
 		$og[$property] = $content;
 		
 	}
-	$metas=$og['description'];
-	if(sizeof($metas) == 0) {
+
+	
+	if(sizeof($og) == 0) {
 		$meta=0;
 	} 
 	else{
 		//print_r($metas);
-		$output = $metas['description'];
-		$meta = strlen($output);
+		$metas=$og['description'];
+		$meta = strlen($metas);
 	}
+
+	// $metas=$og['description'];
+	// if(sizeof($metas) == 0) {
+	// 	$meta=0;
+	// } 
+	// else{
+	// 	//print_r($metas);
+	// 	$output = $metas['description'];
+	// 	$meta = strlen($output);
+	// }
 }
 
 ?>

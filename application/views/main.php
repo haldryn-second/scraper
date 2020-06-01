@@ -24,7 +24,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 			</form>
 		</div> -->
 
-		<form class="form" method="GET" action="<?= base_url() ?>scrap">
+		<form class="form" method="GET" action="<?= base_url() ?>Scrap">
 			<div class="form-group row">
 				<label for="inputPassword" class="col-sm-1 col-form-label text-center">URL</label>
 				<div class="col-sm-8 mb-4">
