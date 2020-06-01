@@ -72,7 +72,7 @@ class Scrap extends REST_Controller
 		$output = $crawler->filter($selector_enlace)->extract(array('href'));
 		$links = (count($output));
 		
- 
+
 		$links_internos = 0;
 		for ($i = 0; $i < count($output); $i++) {
 			if ((substr($output[$i], 0, 33) == "https://www.diarioinformacion.com") || (substr($output[$i], 0, 26) == "https://www.informacion.es") || (substr($output[$i], 0, 1) == "/")) ++$links_internos;
@@ -111,6 +111,19 @@ class Scrap extends REST_Controller
 
 		// //CONTEO DE IMÁGENES
 		$imagenes = $crawler->filter($selector_img);
+
+
+
+		$img_width = $crawler->filter($selector_img)->extract(array('width'));
+
+		$tam_imgs=1;
+		for ($i=0; $i<sizeof($img_width);$i++){
+			echo $i . " - " .$img_width[$i];
+			if (($img_width[$i]>600)&&($img_width[$i]<0)){
+				$tam_imgs=-1;
+			}
+		}
+		
 		$imagenes_autor = $crawler->filter($selector_img_autor);
 		
 		$imgs = count($imagenes)-count($imagenes_autor);
@@ -153,6 +166,7 @@ class Scrap extends REST_Controller
 			"autor" => array("A" => 1, "B" => 0, "C" => 0, "D" => 0),
 			"cuerpo" => array("A" => 600, "B" => 500, "C" => 350, "D" => 0),
 			"imgs" => array("A" => 3, "B" => 2, "C" => 1, "D" => 0),
+			"tam_imgs" => array("A" => 1, "B" =>-1, "C" => -1, "D" => -1),
 			"alts" => array("A" => 1, "B" => -1, "C" => -1, "D" => -1),
 			"pies" => array("A" => 1, "B" => -1, "C" => -1, "D" => -1),
 			"vids" => array("A" => 2, "B" => 1, "C" => 0, "D" => 0),
@@ -174,6 +188,7 @@ class Scrap extends REST_Controller
 			"autor" => array("A" => 50, "B" => 0, "C" => 0, "D" => 0),
 			"cuerpo" => array("A" => 100, "B" => 80, "C" => 50, "D" => 0),
 			"imgs" => array("A" => 200, "B" => 80, "C" => 60, "D" => 0),
+			"tam_imgs" => array("A" => 200, "B" => 0, "C" => 0, "D" => 0),
 			"alts" => array("A" => 100, "B" => 0, "C" => 0, "D" => 0),
 			"pies" => array("A" => 50, "B" => 0, "C" => 0, "D" => 0),
 			"vids" => array("A" => 100, "B" => 80, "C" => 0, "D" => 0),
@@ -212,6 +227,7 @@ class Scrap extends REST_Controller
 			'Autor' => array("Puntos" =>$punt_autor, "Max Puntos" => $punt_autor_max),
 			'Cuerpo' => array("Puntos" =>$punt_cuerpo, "Max Puntos" => $punt_cuerpo_max),
 			'Imágenes' => array("Puntos" =>$punt_imgs, "Max Puntos" => $punt_imgs_max),
+			'Tamaño de Imágenes' => array("Puntos" =>$punt_tam_imgs, "Max Puntos" => $punt_tam_imgs_max),
 			'Alt-Title' => array("Puntos" =>$punt_alts, "Max Puntos" => $punt_alts_max),
 			'Pies de foto' => array("Puntos" =>$punt_pies, "Max Puntos" => $punt_pies_max),
 			'Vídeos' => array("Puntos" =>$punt_vids, "Max Puntos" => $punt_vids_max),

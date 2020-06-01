@@ -1,5 +1,6 @@
 <?php 
 
+
 if ((substr($url, 0, 33) == "https://www.diarioinformacion.com") ||
 	(substr($url, 0, 26) == "https://www.informacion.es")||
 	(substr($url, 0, 29) == "https://www.diaridegirona.cat")||
