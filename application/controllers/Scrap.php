@@ -71,16 +71,20 @@ class Scrap extends REST_Controller
 		// //CONTEO DE ENLACES EN EL CUERPO DE LA NOTICIA
 		$output = $crawler->filter($selector_enlace)->extract(array('href'));
 		$links = (count($output));
-		
+		print_r($output);
 
 		$links_internos = 0;
 		for ($i = 0; $i < count($output); $i++) {
-			if ((substr($output[$i], 0, 33) == "https://www.diarioinformacion.com") || (substr($output[$i], 0, 26) == "https://www.informacion.es") || (substr($output[$i], 0, 1) == "/")) ++$links_internos;
+			if ((substr($output[$i], 0, 33) == "https://www.diarioinformacion.com")||
+				(substr($output[$i], 0, 26) == "https://www.informacion.es") ||
+				(substr($output[$i], 0, 32) == "http://www.diarioinformacion.com") ||
+				(substr($output[$i], 0, 25) == "http://www.informacion.es")||
+				(substr($output[$i], 0, 1) == "/")) ++$links_internos;
 		}
-		//DIARIOCORDOBA
+
 		for ($i = 0; $i < count($output); $i++) {
-			if (substr($output[$i], 0, 29) == "https://www.diariocordoba.com") ++$links_internos;
-		}
+				if (substr($output[$i], 0, 18)==(substr($url, 0, 18))) ++$links_internos;
+			}
 
 		// //CONTEO DE ENLACES CON NOFOLLOW O SPONSORED EN EL CUERPO DE LA NOTICIA
 		$output = $crawler->filter($selector_nofollow);
@@ -89,7 +93,13 @@ class Scrap extends REST_Controller
 		$output = $crawler->filter($selector_sponsored);
 		$sponsored = (count($output));
 
-		$links_externos = ($nofollow + $sponsored);
+		$output = $crawler->filter($selector_mail);
+		$mails = (count($output));
+
+		$output = $crawler->filter($selector_tel);
+		$tels = (count($output));
+
+		$links_externos = ($nofollow + $sponsored + $mails + $tels);
 
 		$links_externos_follow = ($links - ($links_internos + $links_externos));
 		if ($links_externos_follow<0)$links_externos_follow=0;
@@ -111,9 +121,6 @@ class Scrap extends REST_Controller
 
 		// //CONTEO DE IMÁGENES
 		$imagenes = $crawler->filter($selector_img);
-
-
-
 		$img_width = $crawler->filter($selector_img)->extract(array('width'));
 
 		$tam_imgs=1;
@@ -151,13 +158,12 @@ class Scrap extends REST_Controller
 		}
 		$vids = $vids - $maps;
 
-
 		// //TAGS
 		$output = $crawler->filter($selector_tags);
 		$tags = count($output);
-		
 
 		// // //PUNTUACIONES
+
 
 		$matriz_valores = array(
 			"title" => array("A" => 70, "B" => 60, "C" => 45, "D" => 0),
@@ -190,7 +196,7 @@ class Scrap extends REST_Controller
 			"tam_imgs" => array("A" => 300, "B" => 0, "C" => 0, "D" => 0),
 			"alts" => array("A" => 300, "B" => 0, "C" => 0, "D" => 0),
 			"pies" => array("A" => 100, "B" => 0, "C" => 0, "D" => 0),
-			"vids" => array("A" => 200, "B" => 80, "C" => 0, "D" => 0),
+			"vids" => array("A" => 200, "B" => 0, "C" => 0, "D" => 0),
 			"maps" => array("A" => 200, "B" => 0, "C" => 0, "D" => 0),
 			"neg" => array("A" => 150, "B" => 125, "C" => 100, "D" => 0),
 			"ladillos" => array("A" => 200, "B" => 150, "C" => 100, "D" => 0),
