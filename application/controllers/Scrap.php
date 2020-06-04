@@ -75,9 +75,7 @@ class Scrap extends REST_Controller
 
 		$links_internos = 0;
 		for ($i = 0; $i < count($output); $i++) {
-			if ((substr($output[$i], 0, 33) == "https://www.diarioinformacion.com")||
-				(substr($output[$i], 0, 26) == "https://www.informacion.es") ||
-				(substr($output[$i], 0, 32) == "http://www.diarioinformacion.com") ||
+			if ((substr($output[$i], 0, 32) == "http://www.diarioinformacion.com") ||
 				(substr($output[$i], 0, 25) == "http://www.informacion.es")||
 				(substr($output[$i], 0, 1) == "/")) ++$links_internos;
 		}
@@ -230,7 +228,7 @@ class Scrap extends REST_Controller
 			'data'=>array('Title' => array("Puntos" => $punt_title, "Max Puntos" => $punt_title_max),
 			'Meta' => array("Puntos" =>$punt_meta, "Max Puntos" => $punt_meta_max),
 			'Autor' => array("Puntos" =>$punt_autor, "Max Puntos" => $punt_autor_max),
-			'Cuerpo' => array("Puntos" =>$punt_cuerpo, "Max Puntos" => $punt_cuerpo_max),
+			'Extensión del texto' => array("Puntos" =>$punt_cuerpo, "Max Puntos" => $punt_cuerpo_max),
 			'Imágenes' => array("Puntos" =>$punt_imgs, "Max Puntos" => $punt_imgs_max),
 			'Tamaño de Imágenes' => array("Puntos" =>$punt_tam_imgs, "Max Puntos" => $punt_tam_imgs_max),
 			'Alt-Title' => array("Puntos" =>$punt_alts, "Max Puntos" => $punt_alts_max),
