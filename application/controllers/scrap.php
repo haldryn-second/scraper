@@ -118,7 +118,6 @@ class Scrap extends REST_Controller
 
 		$tam_imgs=1;
 		for ($i=0; $i<sizeof($img_width);$i++){
-			echo $i . " - " .$img_width[$i];
 			if (($img_width[$i]>600)&&($img_width[$i]<0)){
 				$tam_imgs=-1;
 			}
@@ -162,14 +161,14 @@ class Scrap extends REST_Controller
 
 		$matriz_valores = array(
 			"title" => array("A" => 70, "B" => 60, "C" => 45, "D" => 0),
-			"meta" => array("A" => 100, "B" => 80, "C" => 60, "D" => 0),
+			"meta" => array("A" => 160, "B" => 80, "C" => 60, "D" => 0),
 			"autor" => array("A" => 1, "B" => 0, "C" => 0, "D" => 0),
-			"cuerpo" => array("A" => 600, "B" => 500, "C" => 350, "D" => 0),
+			"cuerpo" => array("A" => 1000, "B" => 600, "C" => 450, "D" => 0),
 			"imgs" => array("A" => 3, "B" => 2, "C" => 1, "D" => 0),
 			"tam_imgs" => array("A" => 1, "B" =>-1, "C" => -1, "D" => -1),
 			"alts" => array("A" => 1, "B" => -1, "C" => -1, "D" => -1),
 			"pies" => array("A" => 1, "B" => -1, "C" => -1, "D" => -1),
-			"vids" => array("A" => 2, "B" => 1, "C" => 0, "D" => 0),
+			"vids" => array("A" => 1, "B" => 0, "C" => 0, "D" => 0),
 			"maps" => array("A" => 1, "B" => 0, "C" => 0, "D" => 0),
 			"neg" => array("A" => 9, "B" => 7, "C" => 5, "D" => 0),
 			"ladillos" => array("A" => 3, "B" => 2, "C" => 1, "D" => 0),
@@ -183,22 +182,22 @@ class Scrap extends REST_Controller
 
 
 		$matriz_puntos =  array(
-			"title" => array("A" => 200, "B" => 80, "C" => 60, "D" => 0),
-			"meta" => array("A" => 200, "B" => 80, "C" => 60, "D" => 0),
-			"autor" => array("A" => 50, "B" => 0, "C" => 0, "D" => 0),
-			"cuerpo" => array("A" => 100, "B" => 80, "C" => 50, "D" => 0),
-			"imgs" => array("A" => 200, "B" => 80, "C" => 60, "D" => 0),
-			"tam_imgs" => array("A" => 200, "B" => 0, "C" => 0, "D" => 0),
-			"alts" => array("A" => 100, "B" => 0, "C" => 0, "D" => 0),
-			"pies" => array("A" => 50, "B" => 0, "C" => 0, "D" => 0),
-			"vids" => array("A" => 100, "B" => 80, "C" => 0, "D" => 0),
-			"maps" => array("A" => 100, "B" => 0, "C" => 0, "D" => 0),
-			"neg" => array("A" => 100, "B" => 60, "C" => 40, "D" => 0),
-			"ladillos" => array("A" => 100, "B" => 50, "C" => 25, "D" => 0),
+			"title" => array("A" => 300, "B" => 250, "C" => 200, "D" => 0),
+			"meta" => array("A" => 300, "B" => 250, "C" => 200, "D" => 0),
+			"autor" => array("A" => 100, "B" => 0, "C" => 0, "D" => 0),
+			"cuerpo" => array("A" => 300, "B" => 200, "C" => 100, "D" => 0),
+			"imgs" => array("A" => 500, "B" => 350, "C" => 200, "D" => 0),
+			"tam_imgs" => array("A" => 300, "B" => 0, "C" => 0, "D" => 0),
+			"alts" => array("A" => 300, "B" => 0, "C" => 0, "D" => 0),
+			"pies" => array("A" => 100, "B" => 0, "C" => 0, "D" => 0),
+			"vids" => array("A" => 200, "B" => 80, "C" => 0, "D" => 0),
+			"maps" => array("A" => 200, "B" => 0, "C" => 0, "D" => 0),
+			"neg" => array("A" => 150, "B" => 125, "C" => 100, "D" => 0),
+			"ladillos" => array("A" => 200, "B" => 150, "C" => 100, "D" => 0),
 			"tags" => array("A" => 100, "B" => 50, "C" => 25, "D" => 0),
-			"links" => array("A" => 100, "B" => 50, "C" => 25, "D" => 0),
-			"links_internos" => array("A" => 200, "B" => 150, "C" => 100, "D" => 0),
-			"links_externos_follow" => array("A" => 500, "B" => 500, "C" => 500, "D" => 0),
+			"links" => array("A" => 200, "B" => 175, "C" => 150, "D" => 0),
+			"links_internos" => array("A" => 200, "B" => 175, "C" => 150, "D" => 0),
+			"links_externos_follow" => array("A" => 1000, "B" => 1000, "C" => 1000, "D" => 0),
 			"links50" => array("A" => 100, "B" => 0, "C" => 0, "D" => 0)
 		);
 
