@@ -71,7 +71,7 @@ class Scrap extends REST_Controller
 		// //CONTEO DE ENLACES EN EL CUERPO DE LA NOTICIA
 		$output = $crawler->filter($selector_enlace)->extract(array('href'));
 		$links = (count($output));
-		print_r($output);
+
 
 		$links_internos = 0;
 		for ($i = 0; $i < count($output); $i++) {

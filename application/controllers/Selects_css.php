@@ -16,6 +16,7 @@ if ((substr($url, 0, 33) == "https://www.diarioinformacion.com") ||
 	(substr($url, 0, 27) == "https://www.levante-emv.com")||
 	(substr($url, 0, 24) == "https://www.emporda.info")||
 	(substr($url, 0, 22) == "https://www.regio7.cat")||
+	(substr($url, 0, 27) == "https://www.superdeporte.es")||
 	(substr($url, 0, 20) == "https://www.eldia.es")) {
 		
 	//SCRAP INFORMACION
