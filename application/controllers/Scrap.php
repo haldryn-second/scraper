@@ -70,8 +70,8 @@ class Scrap extends REST_Controller
 
 		// //CONTEO DE ENLACES EN EL CUERPO DE LA NOTICIA
 		$output = $crawler->filter($selector_enlace)->extract(array('href'));
+		print_r($output);
 		$links = (count($output));
-
 
 		$links_internos = 0;
 		for ($i = 0; $i < count($output); $i++) {
@@ -79,17 +79,26 @@ class Scrap extends REST_Controller
 				(substr($output[$i], 0, 25) == "http://www.informacion.es")||
 				(substr($output[$i], 0, 1) == "/")) ++$links_internos;
 		}
-
 		for ($i = 0; $i < count($output); $i++) {
 				if (substr($output[$i], 0, 18)==(substr($url, 0, 18))) ++$links_internos;
 			}
 
 		// //CONTEO DE ENLACES CON NOFOLLOW O SPONSORED EN EL CUERPO DE LA NOTICIA
-		$output = $crawler->filter($selector_nofollow);
-		$nofollow = (count($output));
 
-		$output = $crawler->filter($selector_sponsored);
-		$sponsored = (count($output));
+
+		$tipo_enlace = $crawler->filter($selector_enlace)->extract(array('rel'));
+		$nofollow=0;
+		$sponsored=0;
+		for ($i = 0; $i < count($tipo_enlace); $i++) {
+			if (trim($tipo_enlace[$i])=="sponsored")$sponsored++;
+			else if (trim($tipo_enlace[$i])=="nofollow")$nofollow++;
+		}
+
+		// $output = $crawler->filter($selector_nofollow);
+		// $nofollow = (count($output));
+
+		// $output = $crawler->filter($selector_sponsored);
+		// $sponsored = (count($output));
 
 		$output = $crawler->filter($selector_mail);
 		$mails = (count($output));
@@ -97,9 +106,13 @@ class Scrap extends REST_Controller
 		$output = $crawler->filter($selector_tel);
 		$tels = (count($output));
 
-		$links_externos = ($nofollow + $sponsored + $mails + $tels);
+		$output = $crawler->filter($selector_light);
+		$lightbox = (count($output));
+
+		$links_externos = ($nofollow + $sponsored + $mails + $tels +$lightbox);
 
 		$links_externos_follow = ($links - ($links_internos + $links_externos));
+		
 		if ($links_externos_follow<0)$links_externos_follow=0;
 
 		// //ENLACES A PARTIR DEL 50%

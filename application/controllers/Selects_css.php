@@ -33,9 +33,10 @@ if ((substr($url, 0, 33) == "https://www.diarioinformacion.com") ||
 	$selector_enlace = 'span[itemprop="articleBody"] a';
 	$selector_nofollow = 'span[itemprop="articleBody"] a[rel="nofollow"]';
 	$selector_sponsored = 'span[itemprop="articleBody"] a[rel="sponsored"]';
+	$selector_light = 'span[itemprop="articleBody"] a.LightBox';
 	$selector_tel = 'span[itemprop="articleBody"] a[href*="tel:"]';
 	$selector_mail = 'span[itemprop="articleBody"] a[href*="mailto:"]';
-	$selector_frame = 'iframe';
+	$selector_frame = 'span[itemprop="articleBody"] iframe';
 	$selector_ladillos = 'span[itemprop="articleBody"] h2+p';
 	$selector_pie_foto = 'div.cuerpo_noticia div[itemprop="image"] span.pie_foto';
 	$selector_redactor = 'span.autor_sup a';
@@ -74,9 +75,10 @@ else if ((substr($url, 0, 29) == "https://www.diariocordoba.com")||
 	$selector_enlace = 'div.CuerpoDeNoticia a';
 	$selector_nofollow = 'div.CuerpoDeNoticia a[rel="nofollow"]';
 	$selector_sponsored = 'div.CuerpoDeNoticia a[rel="sponsored"]';
+	$selector_light = 'div.CuerpoDeNoticia a.LightBox';
 	$selector_tel = 'div.CuerpoDeNoticia a[href*="tel:"]';
 	$selector_mail = 'div.CuerpoDeNoticia a[href*="mailto:"]';
-	$selector_frame = 'iframe';
+	$selector_frame = 'div.Contenidos iframe';
 	$selector_ladillos = 'div.Contenidos h2+p';
 	$selector_pie_foto = 'div.Contenidos p.PieDeFoto';
 	$selector_redactor = 'p.AutorDeNoticia strong';
